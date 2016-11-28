@@ -65,8 +65,9 @@ class Staff extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'first_name', 'last_name', 'mobile_number', 'date_birth', 'date_appointment', 'date_current_desig', 'bank_account_no', 'bank_ifsc', 'bank_name', 'bank_branch', 'pay_matrix_index', 'pay_matrix_level', 'current_designation',  'category', 'basic_pay_6cpc',  'date_joining', 'date_last_inc','pan_number', 'is_jan_inc', 'gender', 'status'], 'required'],
-            [['id', 'bank_account_no',  'pay_matrix_id', 'current_designation', 'prev_designation', 'category', 'basic_pay_6cpc', 'is_jan_inc', 'gender', 'status'], 'integer'],
+            [['id', 'bank_account_no',  'pay_matrix_index', 'current_designation', 'prev_designation', 'category', 'basic_pay_6cpc', 'is_jan_inc', 'gender', 'status'], 'integer'],
             [['date_birth', 'date_appointment', 'date_current_desig', 'date_joining', 'date_last_inc'], 'safe'],
+            [['date_birth', 'date_appointment', 'date_current_desig', 'date_joining', 'date_last_inc'], 'date', 'format'=>'dd-MM-yyyy'],
             [['first_name', 'last_name', 'bank_name', 'bank_branch'], 'string', 'max' => 20],
             [['mobile_number', 'mobile_number2'], 'string', 'max' => 16],
             [['email_id'], 'string', 'max' => 35],
@@ -75,8 +76,8 @@ class Staff extends \yii\db\ActiveRecord
             [['mobile_number'], 'unique'],
             [['category'], 'exist', 'skipOnError' => true, 'targetClass' => StaffCategory::className(), 'targetAttribute' => ['category' => 'id']],
             [['current_designation'], 'exist', 'skipOnError' => true, 'targetClass' => Designation::className(), 'targetAttribute' => ['current_designation' => 'design_id']],
-            [['pay_matrix_index'], 'exist', 'skipOnError' => true, 'targetClass' => PaymatrixCpc7::className(), 'targetAttribute' => ['pay_matrix_id' => 'index']],
-            [['pay_matrix_level'], 'exist', 'skipOnError' => true, 'targetClass' => PaymatrixCpc7::className(), 'targetAttribute' => ['pay_matrix_id' => 'level']],
+            [['pay_matrix_index'], 'exist', 'skipOnError' => true, 'targetClass' => PaymatrixCpc7::className(), 'targetAttribute' => ['pay_matrix_index' => 'index']],
+            [['pay_matrix_level'], 'exist', 'skipOnError' => true, 'targetClass' => PaymatrixCpc7::className(), 'targetAttribute' => ['pay_matrix_level' => 'level']],
             [['prev_designation'], 'exist', 'skipOnError' => true, 'targetClass' => Designation::className(), 'targetAttribute' => ['prev_designation' => 'design_id']],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => StaffStatus::className(), 'targetAttribute' => ['status' => 'id']],
         ];
@@ -275,5 +276,27 @@ class Staff extends \yii\db\ActiveRecord
     	$levelMap = ArrayHelper::map($paymatrixarray, 'level', 'level');
     	return $levelMap;
     }
+
+    public function beforeSave($insert)
+    {
+    	$this->date_birth = Yii::$app->formatter->asDate($this->date_birth, 'yyyy-MM-dd');
+    	$this->date_appointment = Yii::$app->formatter->asDate($this->date_appointment, 'yyyy-MM-dd');
+    	$this->date_current_desig = Yii::$app->formatter->asDate($this->date_current_desig, 'yyyy-MM-dd');
+    	$this->date_joining = Yii::$app->formatter->asDate($this->date_joining, 'yyyy-MM-dd');
+    	$this->date_last_inc = Yii::$app->formatter->asDate($this->date_last_inc, 'yyyy-MM-dd');
+    	parent::beforeSave($insert);
+    	return true;
+    }
     
+    public function afterFind()
+    {
+    	$this->date_birth = Yii::$app->formatter->asDate($this->date_birth, 'dd-MM-yyyy');
+    	$this->date_appointment = Yii::$app->formatter->asDate($this->date_appointment, 'dd-MM-yyyy');
+    	$this->date_current_desig = Yii::$app->formatter->asDate($this->date_current_desig, 'dd-MM-yyyy');
+    	$this->date_joining = Yii::$app->formatter->asDate($this->date_joining, 'dd-MM-yyyy');
+    	$this->date_last_inc = Yii::$app->formatter->asDate($this->date_last_inc, 'dd-MM-yyyy');
+    	//$this->importo = Yii::$app->formatter->asCurrency($this->importo, 'EUR');
+    	parent::afterFind();
+    	return true;
+    }
 }

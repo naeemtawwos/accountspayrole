@@ -30,11 +30,11 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'email_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date_birth')->widget(DatePicker::className(), ['dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
+    <?= $form->field($model, 'date_birth')->widget(DatePicker::className(), ['options'=>['class'=>'form-control'],'dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
 
-    <?= $form->field($model, 'date_appointment')->widget(DatePicker::className(), ['dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
+    <?= $form->field($model, 'date_appointment')->widget(DatePicker::className(), ['options'=>['class'=>'form-control'],'dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
 
-    <?= $form->field($model, 'date_current_desig')->widget(DatePicker::className(), ['dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
+    <?= $form->field($model, 'date_current_desig')->widget(DatePicker::className(), ['options'=>['class'=>'form-control'],'dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
 
     <?= $form->field($model, 'bank_account_no')->textInput(['maxlength' => true]) ?>
 
@@ -60,13 +60,13 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'GPF_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date_joining')->widget(DatePicker::className(), ['dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
+    <?= $form->field($model, 'date_joining')->widget(DatePicker::className(), ['options'=>['class'=>'form-control'],'dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],]) ?>
 
     <?= $form->field($model, 'pan_number')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date_last_inc')-> widget(\yii\jui\DatePicker::className(), ['dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],])?>
+    <?= $form->field($model, 'date_last_inc')-> widget(\yii\jui\DatePicker::className(), ['options'=>['class'=>'form-control'],'dateFormat'=>'dd-MM-yyyy','clientOptions'=>['yearRange'=>'1920:2099'],])?>
 
-    <?= $form->field($model, 'is_jan_inc')->checkbox() ?>
+    <?= $form->field($model, 'is_jan_inc')->checkbox(['options'=>['class'=>'form-control']] )?>
 
     <?= $form->field($model, 'gender')->dropDownList([ '0' => 'Female', '1' => 'Male'], ['prompt' => '']) ?>
 
