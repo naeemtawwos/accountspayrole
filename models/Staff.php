@@ -276,8 +276,14 @@ class Staff extends \yii\db\ActiveRecord
     	$levelMap = ArrayHelper::map($paymatrixarray, 'level', 'level');
     	return $levelMap;
     }
-
-    public function beforeSave($insert)
+    /**
+     * formats all date fields in yyyy-MM-dd format
+     * before saving to the database
+     * 
+     *overrides the base class function
+     *and calls it at the end     
+     */
+    protected function beforeSave($insert)
     {
     	$this->date_birth = Yii::$app->formatter->asDate($this->date_birth, 'yyyy-MM-dd');
     	$this->date_appointment = Yii::$app->formatter->asDate($this->date_appointment, 'yyyy-MM-dd');
@@ -288,7 +294,14 @@ class Staff extends \yii\db\ActiveRecord
     	return true;
     }
     
-    public function afterFind()
+    /**
+     * formats all date fields in dd-MM-yyyy format
+     * while reading from the database
+     *
+     *overrides the afterFind function of the class function
+     *and calls it at the end     
+     */
+    protected function afterFind()
     {
     	$this->date_birth = Yii::$app->formatter->asDate($this->date_birth, 'dd-MM-yyyy');
     	$this->date_appointment = Yii::$app->formatter->asDate($this->date_appointment, 'dd-MM-yyyy');
